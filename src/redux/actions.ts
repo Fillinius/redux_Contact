@@ -1,6 +1,4 @@
 import { GroupContactsDto } from './../types/dto/GroupContactsDto'
-import { ContactDto } from 'src/types/dto/ContactDto'
-
 interface IFiltredContact {
   type: string
   payload: string

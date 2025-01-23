@@ -1,9 +1,6 @@
-import React, { memo, useEffect, useState } from 'react'
-import { CommonPageProps } from './types'
+import { memo } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
-import { ContactDto } from 'src/types/dto/ContactDto'
-import { GroupContactsDto } from 'src/types/dto/GroupContactsDto'
 import { GroupContactsCard } from 'src/components/GroupContactsCard'
 import { Empty } from 'src/components/Empty'
 import { ContactCard } from 'src/components/ContactCard'
@@ -17,25 +14,7 @@ export const GroupPage = memo(() => {
   )
   const { groupId } = useParams<{ groupId: string }>()
   const dispatch = useAppDispatch()
-  // console.log('contacts', contacts)
-  // console.log('groupContacts', groupContacts)
-  // const [contacts, setContacts] = useState<ContactDto[]>([])
-  // const [groupContacts, setGroupContacts] = useState<GroupContactsDto>()
 
-  // useEffect(() => {
-  //   const findGroup = groupContacts.find(({ id }) => id === groupId)
-  //   setGroupContacts(findGroup)
-  //   setContacts(() => {
-  //     if (findGroup) {
-  //       return contactsState.filter(({ id }) =>
-  //         findGroup.contactIds.includes(id)
-  //       )
-  //     }
-  //     return []
-  //   })
-  //    }, [groupId])
-
-  ////////////////////////////
   const findGroup = groupContacts.find(
     (groupContact) => groupContact.id === groupId
   )
@@ -44,9 +23,6 @@ export const GroupPage = memo(() => {
   if (findGroup) {
     dispatch(filtredContactByGroupAction(findGroup))
   }
-
-  // console.log('groupContacts', groupContacts)
-
   return (
     <Row className="g-4">
       {findGroup ? (

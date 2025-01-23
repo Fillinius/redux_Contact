@@ -1,5 +1,4 @@
-import React, { memo } from 'react'
-import { CommonPageProps } from './types'
+import { memo } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { GroupContactsCard } from 'src/components/GroupContactsCard'
 import { useAppSelector } from 'src/redux/reducers/hooks'

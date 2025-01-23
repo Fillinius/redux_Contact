@@ -1,9 +1,7 @@
-import React, { memo, useState } from 'react'
-import { CommonPageProps } from './types'
+import { memo } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { ContactCard } from 'src/components/ContactCard'
 import { FilterForm, FilterFormValues } from 'src/components/FilterForm'
-import { ContactDto } from 'src/types/dto/ContactDto'
 import { filtredContactAction } from 'src/redux/actions'
 import { useAppDispatch, useAppSelector } from 'src/redux/reducers/hooks'
 
@@ -13,18 +11,10 @@ export const ContactListPage = memo(() => {
     (state) => state.groupContacts.entitiesGroupContacts
   )
   const dispatch = useAppDispatch()
-  console.log(groupContacts)
 
-  // const [contacts, setContacts] = useState<ContactDto[]>(contactsState)
   const onSubmit = (fv: Partial<FilterFormValues>) => {
-    // let findContacts: ContactDto[] = contactsState
-
     if (fv.name) {
       const fvName = fv.name.toLowerCase()
-
-      // findContacts = findContacts.filter(
-      //   ({ name }) => name.toLowerCase().indexOf(fvName) > -1
-      // )
       dispatch(filtredContactAction(fvName))
     }
 
@@ -41,8 +31,6 @@ export const ContactListPage = memo(() => {
         )
       }
     }
-
-    // setContacts(findContacts)
   }
 
   return (
