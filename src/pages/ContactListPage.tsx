@@ -2,14 +2,21 @@ import { memo } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { ContactCard } from 'src/components/ContactCard'
 import { FilterForm, FilterFormValues } from 'src/components/FilterForm'
-import { filtredContactAction } from 'src/redux/actions'
+import {
+  filtredContactAction,
+  filtredContactByGroupAction,
+  findGroupByIdAction,
+} from 'src/redux/actions'
 import { useAppDispatch, useAppSelector } from 'src/redux/reducers/hooks'
 
-export const ContactListPage = memo(() => {
+export const ContactListPage = () => {
   const contacts = useAppSelector((state) => state.contacts.entitiesContacts)
+  console.log(contacts)
+
   const groupContacts = useAppSelector(
     (state) => state.groupContacts.entitiesGroupContacts
   )
+
   const dispatch = useAppDispatch()
 
   const onSubmit = (fv: Partial<FilterFormValues>) => {
@@ -18,20 +25,25 @@ export const ContactListPage = memo(() => {
       dispatch(filtredContactAction(fvName))
     }
 
-    if (fv.groupId) {
-      if (!groupContacts) return 'Err data'
-      const groupContact = groupContacts.find(({ id }) => id === fv.groupId)
+    if (fv.groupId && !Array.isArray(groupContacts)) {
+      // if (!Array.isArray(groupContacts)) return 'Err data'
+      // const groupContact = groupContacts.find(({ id }) => id === fv.groupId)
+      dispatch(findGroupByIdAction(fv.groupId))
 
-      if (groupContact) {
+      if (groupContacts && !Array.isArray(groupContacts)) {
         // findContacts = findContacts.filter(({ id }) =>
         //   groupContacts.contactIds.includes(id)
         // )
-        contacts.filter((contact) =>
-          groupContacts.contactIds.includes(contact.id)
-        )
+
+        // contacts.filter((contact) =>
+        //   groupContacts.contactIds.includes(contact.id)
+        // )
+        dispatch(filtredContactByGroupAction(groupContacts))
       }
     }
   }
+  if (!Array.isArray(groupContacts)) return <p>Err data</p>
+  console.log(groupContacts)
 
   return (
     <Row xxl={1}>
@@ -53,4 +65,4 @@ export const ContactListPage = memo(() => {
       </Col>
     </Row>
   )
-})
+}

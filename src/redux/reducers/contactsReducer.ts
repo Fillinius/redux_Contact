@@ -1,7 +1,14 @@
 import { DATA_CONTACT } from 'src/__data__'
 import { ProjectActions } from '../actions'
+import { ContactDto } from 'src/types/dto/ContactDto'
 
-const initialStateContacts = {
+interface IContactState {
+  entitiesContacts: Array<ContactDto>
+  favoriteContacts: Array<ContactDto['id']>
+  isLoading: boolean
+}
+
+const initialStateContacts: IContactState = {
   entitiesContacts: DATA_CONTACT,
   favoriteContacts: [
     DATA_CONTACT[0].id,
@@ -32,8 +39,9 @@ export function contactsReducer(
       }
 
     case 'FILTREDCONTACTBYGROUP':
-      if (action.payload && !Array.isArray(state)) {
+      if (action.payload) {
         console.log(state, action.payload)
+        //don't work
         // return {
         //   ...state,
         //   entitiesContacts: state.entitiesContacts.filter(({ id }) =>

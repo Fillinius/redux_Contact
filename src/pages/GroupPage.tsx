@@ -6,21 +6,24 @@ import { Empty } from 'src/components/Empty'
 import { ContactCard } from 'src/components/ContactCard'
 import { filtredContactByGroupAction } from 'src/redux/actions'
 import { useAppDispatch, useAppSelector } from 'src/redux/reducers/hooks'
+import { GroupContactsDto } from 'src/types/dto/GroupContactsDto'
 
-export const GroupPage = memo(() => {
+export const GroupPage = () => {
   const contacts = useAppSelector((state) => state.contacts.entitiesContacts)
   const groupContacts = useAppSelector(
     (state) => state.groupContacts.entitiesGroupContacts
   )
   const { groupId } = useParams<{ groupId: string }>()
   const dispatch = useAppDispatch()
-
+  if (!Array.isArray(groupContacts)) return <p>Err data</p>
   const findGroup = groupContacts.find(
     (groupContact) => groupContact.id === groupId
   )
   // console.log('findGroup', findGroup)
 
   if (findGroup) {
+    // console.log(contacts)
+
     dispatch(filtredContactByGroupAction(findGroup))
   }
   return (
@@ -49,4 +52,4 @@ export const GroupPage = memo(() => {
       )}
     </Row>
   )
-})
+}

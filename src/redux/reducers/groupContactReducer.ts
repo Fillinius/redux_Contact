@@ -1,7 +1,13 @@
 import { DATA_GROUP_CONTACT } from 'src/__data__'
 import { ProjectActions } from '../actions'
+import { GroupContactsDto } from 'src/types/dto/GroupContactsDto'
 
-const initialGroupContacts = {
+interface IGroupContact {
+  entitiesGroupContacts: Array<GroupContactsDto>
+  isLoading: boolean
+}
+
+const initialGroupContacts: IGroupContact = {
   entitiesGroupContacts: DATA_GROUP_CONTACT,
   isLoading: false,
 }

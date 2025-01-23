@@ -8,6 +8,11 @@ interface IFiltredContactByGroup {
   payload: GroupContactsDto
 }
 
+interface IFindGroupById {
+  type: string
+  payload: string
+}
+
 export function filtredContactAction(name: string): IFiltredContact {
   return {
     type: 'FILTREDCONTACT',
@@ -23,4 +28,14 @@ export function filtredContactByGroupAction(
   }
 }
 
-export type ProjectActions = IFiltredContact | IFiltredContactByGroup
+export function findGroupByIdAction(id: string): IFindGroupById {
+  return {
+    type: 'FINDGROUPBYID',
+    payload: id,
+  }
+}
+
+export type ProjectActions =
+  | IFiltredContact
+  | IFiltredContactByGroup
+  | IFindGroupById

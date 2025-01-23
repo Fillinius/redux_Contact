@@ -12,6 +12,7 @@ const rootReducer = combineReducers({
   groupContacts: groupContactReducer,
 })
 
+//@ts-ignore
 export const store = createStore(rootReducer, applyMiddleware(thunk))
 
 export type RootState = ReturnType<typeof rootReducer>

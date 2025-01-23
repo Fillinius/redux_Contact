@@ -7,7 +7,7 @@ export const GroupListPage = memo(() => {
   const groupContacts = useAppSelector(
     (state) => state.groupContacts.entitiesGroupContacts
   )
-
+  if (!Array.isArray(groupContacts)) return <p>Err data</p>
   return (
     <Row xxl={4}>
       {groupContacts.map((groupContacts) => (
