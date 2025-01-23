@@ -5,10 +5,10 @@ import { useParams } from 'react-router-dom'
 import { ContactDto } from 'src/types/dto/ContactDto'
 import { ContactCard } from 'src/components/ContactCard'
 import { Empty } from 'src/components/Empty'
-import { useSelector } from 'react-redux'
+import { useAppSelector } from 'src/redux/reducers/hooks'
 
 export const ContactPage: FC = () => {
-  const contacts = useSelector((state) => state.contacts.entitiesContacts)
+  const contacts = useAppSelector((state) => state.contacts.entitiesContacts)
 
   const { contactId } = useParams<{ contactId: string }>()
   // const [contact, setContact] = useState<ContactDto>()

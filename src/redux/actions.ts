@@ -3,7 +3,7 @@ import { ContactDto } from 'src/types/dto/ContactDto'
 
 interface IFiltredContact {
   type: string
-  payload: ContactDto['id']
+  payload: string
 }
 interface IFiltredContactByGroup {
   type: string

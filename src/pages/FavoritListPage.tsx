@@ -3,13 +3,13 @@ import { CommonPageProps } from './types'
 import { Col, Row } from 'react-bootstrap'
 import { ContactCard } from 'src/components/ContactCard'
 import { ContactDto } from 'src/types/dto/ContactDto'
-import { useSelector } from 'react-redux'
+import { useAppSelector } from 'src/redux/reducers/hooks'
 
 export const FavoritListPage = memo(() => {
-  const favoriteContacts = useSelector(
+  const favoriteContacts = useAppSelector(
     (state) => state.contacts.favoriteContacts
   )
-  const contacts = useSelector((state) => state.contacts.entitiesContacts)
+  const contacts = useAppSelector((state) => state.contacts.entitiesContacts)
 
   // const [contacts, setContacts] = useState<ContactDto[]>([])
   // useEffect(() => {

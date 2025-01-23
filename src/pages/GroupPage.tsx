@@ -7,16 +7,16 @@ import { GroupContactsDto } from 'src/types/dto/GroupContactsDto'
 import { GroupContactsCard } from 'src/components/GroupContactsCard'
 import { Empty } from 'src/components/Empty'
 import { ContactCard } from 'src/components/ContactCard'
-import { useDispatch, useSelector } from 'react-redux'
 import { filtredContactByGroupAction } from 'src/redux/actions'
+import { useAppDispatch, useAppSelector } from 'src/redux/reducers/hooks'
 
 export const GroupPage = memo(() => {
-  const contacts = useSelector((state) => state.contacts.entitiesContacts)
-  const groupContacts = useSelector(
+  const contacts = useAppSelector((state) => state.contacts.entitiesContacts)
+  const groupContacts = useAppSelector(
     (state) => state.groupContacts.entitiesGroupContacts
   )
   const { groupId } = useParams<{ groupId: string }>()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   // console.log('contacts', contacts)
   // console.log('groupContacts', groupContacts)
   // const [contacts, setContacts] = useState<ContactDto[]>([])

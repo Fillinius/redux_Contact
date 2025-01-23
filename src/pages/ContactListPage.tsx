@@ -4,16 +4,16 @@ import { Col, Row } from 'react-bootstrap'
 import { ContactCard } from 'src/components/ContactCard'
 import { FilterForm, FilterFormValues } from 'src/components/FilterForm'
 import { ContactDto } from 'src/types/dto/ContactDto'
-import { useDispatch, useSelector } from 'react-redux'
 import { filtredContactAction } from 'src/redux/actions'
+import { useAppDispatch, useAppSelector } from 'src/redux/reducers/hooks'
 
 export const ContactListPage = memo(() => {
-  const contacts = useSelector((state) => state.contacts.entitiesContacts)
-  const groupContacts = useSelector(
+  const contacts = useAppSelector((state) => state.contacts.entitiesContacts)
+  const groupContacts = useAppSelector(
     (state) => state.groupContacts.entitiesGroupContacts
   )
-  const dispatch = useDispatch()
-  console.log(contacts)
+  const dispatch = useAppDispatch()
+  console.log(groupContacts)
 
   // const [contacts, setContacts] = useState<ContactDto[]>(contactsState)
   const onSubmit = (fv: Partial<FilterFormValues>) => {
@@ -21,6 +21,7 @@ export const ContactListPage = memo(() => {
 
     if (fv.name) {
       const fvName = fv.name.toLowerCase()
+
       // findContacts = findContacts.filter(
       //   ({ name }) => name.toLowerCase().indexOf(fvName) > -1
       // )
@@ -28,6 +29,7 @@ export const ContactListPage = memo(() => {
     }
 
     if (fv.groupId) {
+      if (!groupContacts) return 'Err data'
       const groupContact = groupContacts.find(({ id }) => id === fv.groupId)
 
       if (groupContact) {
