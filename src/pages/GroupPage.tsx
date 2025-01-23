@@ -19,11 +19,8 @@ export const GroupPage = () => {
   const findGroup = groupContacts.find(
     (groupContact) => groupContact.id === groupId
   )
-  // console.log('findGroup', findGroup)
 
   if (findGroup) {
-    // console.log(contacts)
-
     dispatch(filtredContactByGroupAction(findGroup))
   }
   return (

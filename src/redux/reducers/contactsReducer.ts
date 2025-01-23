@@ -40,7 +40,6 @@ export function contactsReducer(
 
     case 'FILTREDCONTACTBYGROUP':
       if (action.payload) {
-        console.log(state, action.payload)
         //don't work
         // return {
         //   ...state,
