@@ -1,5 +1,7 @@
+import { DATA_GROUP_CONTACT } from 'src/__data__'
+
 const initialGroupContacts = {
-  groupContacts: {},
+  entitiesGroupContacts: DATA_GROUP_CONTACT,
   isLoading: false,
 }
 
@@ -10,8 +12,15 @@ export function groupContactReducer(state = initialGroupContacts, action) {
         ...state,
         isLoading: true,
       }
+    case 'FINDGROUPBYID':
+      return {
+        ...state,
+        entitiesGroupContacts: state.entitiesGroupContacts.find(
+          ({ id }) => id === action.payload
+        ),
+      }
 
     default:
-      break
+      return state
   }
 }
