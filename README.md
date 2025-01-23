@@ -9,6 +9,6 @@ npm start
 ```
 Приложение Контакты - переход по веткам - переход на разные технологии
 master -  хранение состояния React
-feat_Redux
-feat_Redux Toolkit
-feat_Redux Mobix
+1. feat_Redux
+2. feat_Redux Toolkit
+3. feat_Redux Mobix
