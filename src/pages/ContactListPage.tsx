@@ -26,7 +26,7 @@ export const ContactListPage = () => {
     if (fv.groupId && !Array.isArray(groupContacts)) {
       dispatch(findGroupByIdAction(fv.groupId))
 
-      if (groupContacts && !Array.isArray(groupContacts)) {
+      if (groupContacts) {
         dispatch(filtredContactByGroupAction(groupContacts))
       }
     }

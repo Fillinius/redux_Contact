@@ -39,16 +39,26 @@ export function contactsReducer(
       }
 
     case 'FILTREDCONTACTBYGROUP':
+      // console.log(action.payload)
+      // console.log(state.entitiesContacts)
+
+      // console.log(
+      //   state.entitiesContacts.filter(({ id }) =>
+      //     JSON.stringify(action.payload.contactIds).includes(id)
+      //   )
+      // )
+      // console.log(JSON.stringify(action.payload.contactIds))
+
       if (action.payload) {
         //don't work
         // return {
         //   ...state,
         //   entitiesContacts: state.entitiesContacts.filter(({ id }) =>
-        //     action.payload.contactIds.includes(id)
+        //     JSON.stringify(action.payload).contactIds.includes(id)
         //   ),
         // }
+        return state
       }
-      return state
 
     default:
       return state
