@@ -1,12 +1,12 @@
-import { memo } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 import { GroupContactsCard } from 'src/components/GroupContactsCard'
 import { Empty } from 'src/components/Empty'
 import { ContactCard } from 'src/components/ContactCard'
-import { filtredContactByGroupAction } from 'src/redux/actions'
+
 import { useAppDispatch, useAppSelector } from 'src/redux/reducers/hooks'
-import { GroupContactsDto } from 'src/types/dto/GroupContactsDto'
+
+import { filtredContactByGroup } from 'src/redux/reducers/contactsReducer'
 
 export const GroupPage = () => {
   const contacts = useAppSelector((state) => state.contacts.entitiesContacts)
@@ -21,7 +21,7 @@ export const GroupPage = () => {
   )
 
   if (findGroup) {
-    dispatch(filtredContactByGroupAction(findGroup))
+    dispatch(filtredContactByGroup(findGroup))
   }
   return (
     <Row className="g-4">

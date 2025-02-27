@@ -1,7 +1,9 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
-import { Dispatch } from 'redux'
-import { ProjectActions } from '../actions'
+import { UnknownAction } from 'redux'
 import { RootState } from '../store'
+import { ThunkDispatch } from 'redux-thunk'
 
-export const useAppDispatch = useDispatch<Dispatch<ProjectActions>>
+export const useAppDispatch = useDispatch<
+  ThunkDispatch<RootState, void, UnknownAction>
+>
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector

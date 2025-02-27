@@ -1,6 +1,7 @@
 import { DATA_CONTACT } from 'src/__data__'
-import { ProjectActions } from '../actions'
 import { ContactDto } from 'src/types/dto/ContactDto'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { GroupContactsDto } from 'src/types/dto/GroupContactsDto'
 
 interface IContactState {
   entitiesContacts: Array<ContactDto>
@@ -19,48 +20,27 @@ const initialStateContacts: IContactState = {
   isLoading: false,
 }
 
-export function contactsReducer(
-  state = initialStateContacts,
-  action: ProjectActions
-) {
-  switch (action.type) {
-    case 'LOADING':
-      return {
-        ...state,
-        isLoading: true,
-      }
+export const contactsSlice = createSlice({
+  name: 'contacts',
+  initialState: initialStateContacts,
+  reducers: {
+    filteredContact(state, action?: PayloadAction<ContactDto['name']>) {
+      if (!action) return state
+      console.log('filteredContact')
 
-    case 'FILTREDCONTACT':
-      return {
-        ...state,
-        entitiesContacts: state.entitiesContacts.filter(
-          ({ name }) => name.toLowerCase().indexOf(action.payload) > -1
-        ),
-      }
+      state.entitiesContacts.filter(
+        ({ name }) => name.toLowerCase().indexOf(action.payload) > -1
+      )
+    },
+    filtredContactByGroup(state, action?: PayloadAction<GroupContactsDto>) {
+      if (!action) return state
+      console.log('filtredContactByGroup')
 
-    case 'FILTREDCONTACTBYGROUP':
-      // console.log(action.payload)
-      // console.log(state.entitiesContacts)
+      state.entitiesContacts.filter(({ id }) =>
+        JSON.stringify(action.payload.contactIds).includes(id)
+      )
+    },
+  },
+})
 
-      // console.log(
-      //   state.entitiesContacts.filter(({ id }) =>
-      //     JSON.stringify(action.payload.contactIds).includes(id)
-      //   )
-      // )
-      // console.log(JSON.stringify(action.payload.contactIds))
-
-      if (action.payload) {
-        //don't work
-        // return {
-        //   ...state,
-        //   entitiesContacts: state.entitiesContacts.filter(({ id }) =>
-        //     JSON.stringify(action.payload).contactIds.includes(id)
-        //   ),
-        // }
-        return state
-      }
-
-    default:
-      return state
-  }
-}
+export const { filteredContact, filtredContactByGroup } = contactsSlice.actions

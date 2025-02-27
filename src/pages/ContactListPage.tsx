@@ -2,10 +2,10 @@ import { Col, Row } from 'react-bootstrap'
 import { ContactCard } from 'src/components/ContactCard'
 import { FilterForm, FilterFormValues } from 'src/components/FilterForm'
 import {
-  filtredContactAction,
-  filtredContactByGroupAction,
-  findGroupByIdAction,
-} from 'src/redux/actions'
+  filteredContact,
+  filtredContactByGroup,
+} from 'src/redux/reducers/contactsReducer'
+import { findGroupById } from 'src/redux/reducers/groupContactReducer'
 import { useAppDispatch, useAppSelector } from 'src/redux/reducers/hooks'
 
 export const ContactListPage = () => {
@@ -20,14 +20,16 @@ export const ContactListPage = () => {
   const onSubmit = (fv: Partial<FilterFormValues>) => {
     if (fv.name) {
       const fvName = fv.name.toLowerCase()
-      dispatch(filtredContactAction(fvName))
+      console.log(fv.name)
+
+      dispatch(filteredContact(fvName))
     }
 
     if (fv.groupId && !Array.isArray(groupContacts)) {
-      dispatch(findGroupByIdAction(fv.groupId))
+      dispatch(findGroupById(fv.groupId))
 
       if (groupContacts) {
-        dispatch(filtredContactByGroupAction(groupContacts))
+        dispatch(filtredContactByGroup(groupContacts))
       }
     }
   }

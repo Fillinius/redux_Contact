@@ -1,6 +1,6 @@
 import { DATA_GROUP_CONTACT } from 'src/__data__'
-import { ProjectActions } from '../actions'
 import { GroupContactsDto } from 'src/types/dto/GroupContactsDto'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface IGroupContact {
   entitiesGroupContacts: Array<GroupContactsDto>
@@ -12,25 +12,16 @@ const initialGroupContacts: IGroupContact = {
   isLoading: false,
 }
 
-export function groupContactReducer(
-  state = initialGroupContacts,
-  action: ProjectActions
-) {
-  switch (action.type) {
-    case 'LOADINGGROUP':
-      return {
-        ...state,
-        isLoading: true,
-      }
-    case 'FINDGROUPBYID':
-      return {
-        ...state,
-        entitiesGroupContacts: state.entitiesGroupContacts.find(
-          ({ id }) => id === action.payload
-        ),
-      }
+export const groupContactSlice = createSlice({
+  name: 'groupContact',
+  initialState: initialGroupContacts,
+  reducers: {
+    findGroupById(state, action: PayloadAction<GroupContactsDto['id']>) {
+      console.log('findGroupById')
 
-    default:
-      return state
-  }
-}
+      state.entitiesGroupContacts.find(({ id }) => id === action.payload)
+    },
+  },
+})
+
+export const { findGroupById } = groupContactSlice.actions

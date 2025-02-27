@@ -1,2 +1,2 @@
-export { contactsReducer } from './contactsReducer'
-export { groupContactReducer } from './groupContactReducer'
+export { contactsSlice } from './contactsReducer'
+export { groupContactSlice } from './groupContactReducer'

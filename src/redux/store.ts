@@ -1,18 +1,18 @@
-import {
-  applyMiddleware,
-  combineReducers,
-  legacy_createStore as createStore,
-} from 'redux'
-import { contactsReducer } from './reducers/contactsReducer'
-import { groupContactReducer } from './reducers/groupContactReducer'
-import { thunk } from 'redux-thunk'
+import { combineReducers } from 'redux'
+import { contactsSlice } from './reducers/contactsReducer'
+import { groupContactSlice } from './reducers/groupContactReducer'
+
+import { configureStore } from '@reduxjs/toolkit'
 
 const rootReducer = combineReducers({
-  contacts: contactsReducer,
-  groupContacts: groupContactReducer,
+  contacts: contactsSlice.reducer,
+  groupContacts: groupContactSlice.reducer,
 })
 
 //@ts-ignore
-export const store = createStore(rootReducer, applyMiddleware(thunk))
+export const store = configureStore({
+  reducer: rootReducer,
+  devTools: true,
+})
 
 export type RootState = ReturnType<typeof rootReducer>
