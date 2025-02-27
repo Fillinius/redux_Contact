@@ -26,17 +26,15 @@ export const contactsSlice = createSlice({
   reducers: {
     filteredContact(state, action?: PayloadAction<ContactDto['name']>) {
       if (!action) return state
-      console.log('filteredContact')
 
-      state.entitiesContacts.filter(
+      state.entitiesContacts = state.entitiesContacts.filter(
         ({ name }) => name.toLowerCase().indexOf(action.payload) > -1
       )
     },
     filtredContactByGroup(state, action?: PayloadAction<GroupContactsDto>) {
       if (!action) return state
-      console.log('filtredContactByGroup')
 
-      state.entitiesContacts.filter(({ id }) =>
+      state.entitiesContacts = state.entitiesContacts.filter(({ id }) =>
         JSON.stringify(action.payload.contactIds).includes(id)
       )
     },

@@ -3,26 +3,25 @@ import { useParams } from 'react-router-dom'
 import { GroupContactsCard } from 'src/components/GroupContactsCard'
 import { Empty } from 'src/components/Empty'
 import { ContactCard } from 'src/components/ContactCard'
-
-import { useAppDispatch, useAppSelector } from 'src/redux/reducers/hooks'
-
-import { filtredContactByGroup } from 'src/redux/reducers/contactsReducer'
+import { useAppSelector } from 'src/redux/reducers/hooks'
 
 export const GroupPage = () => {
-  const contacts = useAppSelector((state) => state.contacts.entitiesContacts)
+  const contactsState = useAppSelector(
+    (state) => state.contacts.entitiesContacts
+  )
   const groupContacts = useAppSelector(
     (state) => state.groupContacts.entitiesGroupContacts
   )
   const { groupId } = useParams<{ groupId: string }>()
-  const dispatch = useAppDispatch()
-  if (!Array.isArray(groupContacts)) return <p>Err data</p>
+
   const findGroup = groupContacts.find(
     (groupContact) => groupContact.id === groupId
   )
 
-  if (findGroup) {
-    dispatch(filtredContactByGroup(findGroup))
-  }
+  const contacts = contactsState.filter(({ id }) =>
+    JSON.stringify(findGroup?.contactIds).includes(id)
+  )
+
   return (
     <Row className="g-4">
       {findGroup ? (

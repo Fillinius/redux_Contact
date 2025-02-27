@@ -18,14 +18,16 @@ export const ContactListPage = () => {
   const dispatch = useAppDispatch()
 
   const onSubmit = (fv: Partial<FilterFormValues>) => {
+    console.log(fv.name)
     if (fv.name) {
       const fvName = fv.name.toLowerCase()
       console.log(fv.name)
-
       dispatch(filteredContact(fvName))
     }
 
     if (fv.groupId && !Array.isArray(groupContacts)) {
+      console.log(fv.groupId)
+
       dispatch(findGroupById(fv.groupId))
 
       if (groupContacts) {
