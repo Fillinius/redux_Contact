@@ -16,12 +16,15 @@ export const groupContactSlice = createSlice({
   name: 'groupContact',
   initialState: initialGroupContacts,
   reducers: {
-    findGroupById(state, action: PayloadAction<GroupContactsDto['id']>) {
-      console.log('findGroupById')
-
-      state.entitiesGroupContacts.find(({ id }) => id === action.payload)
+    isLoading(state, action: PayloadAction<GroupContactsDto['id']>) {
+      const findGroupContact = state.entitiesGroupContacts.find(
+        (group) => group.id === action.payload
+      )
+      if (findGroupContact) {
+        state.isLoading = !state.isLoading
+      }
     },
   },
 })
 
-export const { findGroupById } = groupContactSlice.actions
+export const { isLoading } = groupContactSlice.actions

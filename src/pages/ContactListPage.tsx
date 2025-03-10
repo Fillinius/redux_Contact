@@ -1,12 +1,9 @@
+import { useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { ContactCard } from 'src/components/ContactCard'
 import { FilterForm, FilterFormValues } from 'src/components/FilterForm'
-import {
-  filteredContact,
-  filtredContactByGroup,
-} from 'src/redux/reducers/contactsReducer'
-import { findGroupById } from 'src/redux/reducers/groupContactReducer'
-import { useAppDispatch, useAppSelector } from 'src/redux/reducers/hooks'
+import { useAppSelector } from 'src/redux/reducers/hooks'
+import { ContactDto } from 'src/types/dto/ContactDto'
 
 export const ContactListPage = () => {
   const contacts = useAppSelector((state) => state.contacts.entitiesContacts)
@@ -15,27 +12,32 @@ export const ContactListPage = () => {
     (state) => state.groupContacts.entitiesGroupContacts
   )
 
-  const dispatch = useAppDispatch()
+  const [findContacts, setFindContacts] = useState<Array<ContactDto>>(contacts)
 
   const onSubmit = (fv: Partial<FilterFormValues>) => {
-    console.log(fv.name)
+    let foundContacts: ContactDto[] = contacts
     if (fv.name) {
       const fvName = fv.name.toLowerCase()
-      console.log(fv.name)
-      dispatch(filteredContact(fvName))
+      foundContacts = foundContacts.filter(
+        ({ name }) => name.toLowerCase().indexOf(fvName) > -1
+      )
     }
 
-    if (fv.groupId && !Array.isArray(groupContacts)) {
-      console.log(fv.groupId)
+    if (fv.groupId) {
+      console.log('fv.groupId', fv.groupId)
+      const foundGroupContacts = groupContacts.find(
+        ({ id }) => id === fv.groupId
+      )
+      console.log(foundGroupContacts, 'group')
 
-      dispatch(findGroupById(fv.groupId))
-
-      if (groupContacts) {
-        dispatch(filtredContactByGroup(groupContacts))
+      if (foundGroupContacts) {
+        foundContacts = foundContacts.filter(({ id }) =>
+          foundGroupContacts.contactIds.includes(id)
+        )
       }
     }
+    setFindContacts(foundContacts)
   }
-  if (!Array.isArray(groupContacts)) return <p>Err data</p>
 
   return (
     <Row xxl={1}>
@@ -48,7 +50,7 @@ export const ContactListPage = () => {
       </Col>
       <Col>
         <Row xxl={4} className="g-4">
-          {contacts.map((contact) => (
+          {findContacts.map((contact) => (
             <Col key={contact.id}>
               <ContactCard contact={contact} withLink />
             </Col>
