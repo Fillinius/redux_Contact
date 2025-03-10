@@ -1,21 +1,23 @@
 import { memo } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { ContactCard } from 'src/components/ContactCard'
+import { useGetContactQuery } from 'src/redux/reducers/contactsReducer'
 import { useAppSelector } from 'src/redux/reducers/hooks'
 
 export const FavoritListPage = memo(() => {
   const favoriteContacts = useAppSelector(
     (state) => state.contacts.favoriteContacts
   )
-  const contacts = useAppSelector((state) => state.contacts.entitiesContacts)
+  const { data: contacts } = useGetContactQuery()
 
-  const filteredContacts = contacts.filter(({ id }) =>
+  const filteredContacts = contacts?.filter(({ id }) =>
     favoriteContacts.includes(id)
   )
+  console.log(filteredContacts)
 
   return (
     <Row xxl={4} className="g-4">
-      {filteredContacts.map((contact) => (
+      {filteredContacts?.map((contact) => (
         <Col key={contact.id}>
           <ContactCard contact={contact} withLink />
         </Col>

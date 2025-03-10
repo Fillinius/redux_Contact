@@ -4,17 +4,20 @@ import { GroupContactsCard } from 'src/components/GroupContactsCard'
 import { Empty } from 'src/components/Empty'
 import { ContactCard } from 'src/components/ContactCard'
 import { useAppSelector } from 'src/redux/reducers/hooks'
+import { useGetGroupContactQuery } from 'src/redux/reducers/groupContactReducer'
 
 export const GroupPage = () => {
   const contactsState = useAppSelector(
     (state) => state.contacts.entitiesContacts
   )
-  const groupContacts = useAppSelector(
-    (state) => state.groupContacts.entitiesGroupContacts
-  )
+  // const groupContacts = useAppSelector(
+  //   (state) => state.groupContacts.entitiesGroupContacts
+  // )
+  const { data: groupContacts } = useGetGroupContactQuery()
+
   const { groupId } = useParams<{ groupId: string }>()
 
-  const findGroup = groupContacts.find(
+  const findGroup = groupContacts?.find(
     (groupContact) => groupContact.id === groupId
   )
 
