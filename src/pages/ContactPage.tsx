@@ -1,18 +1,17 @@
 import { FC } from 'react'
-
 import { Col, Row } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 import { ContactCard } from 'src/components/ContactCard'
 import { Empty } from 'src/components/Empty'
-import { useAppSelector } from 'src/redux/reducers/hooks'
+import { useGetContactQuery } from 'src/redux/reducers/contactsReducer'
 
 export const ContactPage: FC = () => {
-  const contacts = useAppSelector((state) => state.contacts.entitiesContacts)
+  const { data: contacts } = useGetContactQuery()
 
   const { contactId } = useParams<{ contactId: string }>()
 
-  const contact = contacts.find(({ id }) => id === contactId)
-
+  const contact = contacts?.find(({ id }) => id === contactId)
+  console.log(contact)
   return (
     <Row xxl={3}>
       <Col className={'mx-auto'}>

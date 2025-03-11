@@ -1,30 +1,16 @@
-import { DATA_GROUP_CONTACT } from 'src/__data__'
 import { GroupContactsDto } from 'src/types/dto/GroupContactsDto'
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-interface IGroupContact {
-  entitiesGroupContacts: Array<GroupContactsDto>
-  isLoading: boolean
-}
-
-const initialGroupContacts: IGroupContact = {
-  entitiesGroupContacts: DATA_GROUP_CONTACT,
-  isLoading: false,
-}
-
-export const groupContactSlice = createSlice({
-  name: 'groupContact',
-  initialState: initialGroupContacts,
-  reducers: {
-    isLoading(state, action: PayloadAction<GroupContactsDto['id']>) {
-      const findGroupContact = state.entitiesGroupContacts.find(
-        (group) => group.id === action.payload
-      )
-      if (findGroupContact) {
-        state.isLoading = !state.isLoading
-      }
-    },
+export const groupContactApiSlice = createApi({
+  reducerPath: 'groupContact',
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://mocki.io/v1' }),
+  endpoints(builder) {
+    return {
+      getGroupContact: builder.query<Array<GroupContactsDto>, void>({
+        query: () => ({ url: '/9b7bc600-9f3b-4c49-b50c-532e79220220' }),
+      }),
+    }
   },
 })
 
-export const { isLoading } = groupContactSlice.actions
+export const { useGetGroupContactQuery } = groupContactApiSlice

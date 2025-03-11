@@ -1,7 +1,7 @@
 import { DATA_CONTACT } from 'src/__data__'
 import { ContactDto } from 'src/types/dto/ContactDto'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { GroupContactsDto } from 'src/types/dto/GroupContactsDto'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 interface IContactState {
   entitiesContacts: Array<ContactDto>
@@ -35,4 +35,17 @@ export const contactsSlice = createSlice({
   },
 })
 
-export const { isLoading } = contactsSlice.actions
+export const contactApiSlice = createApi({
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://mocki.io/v1' }),
+  endpoints(builder) {
+    return {
+      getContact: builder.query<Array<ContactDto>, void>({
+        query: () => ({
+          url: '/4d7fd30a-ae7c-4ad4-89c4-fad7661ade8b',
+        }),
+      }),
+    }
+  },
+})
+
+export const { useGetContactQuery } = contactApiSlice
