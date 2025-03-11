@@ -1,40 +1,38 @@
-import React, {memo, useEffect, useState} from 'react';
-import {CommonPageProps} from './types';
-import {Col, Row} from 'react-bootstrap';
-import {useParams} from 'react-router-dom';
-import {ContactDto} from 'src/types/dto/ContactDto';
-import {GroupContactsDto} from 'src/types/dto/GroupContactsDto';
-import {GroupContactsCard} from 'src/components/GroupContactsCard';
-import {Empty} from 'src/components/Empty';
-import {ContactCard} from 'src/components/ContactCard';
+import { Col, Row } from 'react-bootstrap'
+import { useParams } from 'react-router-dom'
+import { GroupContactsCard } from 'src/components/GroupContactsCard'
+import { Empty } from 'src/components/Empty'
+import { ContactCard } from 'src/components/ContactCard'
+import { useAppSelector } from 'src/redux/reducers/hooks'
+import { useGetGroupContactQuery } from 'src/redux/reducers/groupContactReducer'
 
-export const GroupPage = memo<CommonPageProps>(({
-  contactsState,
-  groupContactsState
-}) => {
-  const {groupId} = useParams<{ groupId: string }>();
-  const [contacts, setContacts] = useState<ContactDto[]>([]);
-  const [groupContacts, setGroupContacts] = useState<GroupContactsDto>();
+export const GroupPage = () => {
+  const contactsState = useAppSelector(
+    (state) => state.contacts.entitiesContacts
+  )
+  // const groupContacts = useAppSelector(
+  //   (state) => state.groupContacts.entitiesGroupContacts
+  // )
+  const { data: groupContacts } = useGetGroupContactQuery()
 
-  useEffect(() => {
-    const findGroup = groupContactsState[0].find(({id}) => id === groupId);
-    setGroupContacts(findGroup);
-    setContacts(() => {
-      if (findGroup) {
-        return contactsState[0].filter(({id}) => findGroup.contactIds.includes(id))
-      }
-      return [];
-    });
-  }, [groupId]);
+  const { groupId } = useParams<{ groupId: string }>()
+
+  const findGroup = groupContacts?.find(
+    (groupContact) => groupContact.id === groupId
+  )
+
+  const contacts = contactsState.filter(({ id }) =>
+    JSON.stringify(findGroup?.contactIds).includes(id)
+  )
 
   return (
     <Row className="g-4">
-      {groupContacts ? (
+      {findGroup ? (
         <>
           <Col xxl={12}>
             <Row xxl={3}>
               <Col className="mx-auto">
-                <GroupContactsCard groupContacts={groupContacts} />
+                <GroupContactsCard groupContacts={findGroup} />
               </Col>
             </Row>
           </Col>
@@ -48,7 +46,9 @@ export const GroupPage = memo<CommonPageProps>(({
             </Row>
           </Col>
         </>
-      ) : <Empty />}
+      ) : (
+        <Empty />
+      )}
     </Row>
-  );
-});
+  )
+}

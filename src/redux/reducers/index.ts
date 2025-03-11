@@ -1,0 +1,1 @@
+export { contactsSlice } from './contactsReducer'
