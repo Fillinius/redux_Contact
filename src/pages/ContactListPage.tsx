@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { ContactCard } from 'src/components/ContactCard'
 import { FilterForm, FilterFormValues } from 'src/components/FilterForm'
-import { useGetContactQuery } from 'src/redux/reducers/contactsReducer'
-import { useGetGroupContactQuery } from 'src/redux/reducers/groupContactReducer'
+import { useGetContactQuery } from 'src/redux/contacts'
+import { useGetGroupContactQuery } from 'src/redux/groupContacts'
 import { ContactDto } from 'src/types/dto/ContactDto'
 
 export const ContactListPage = () => {
@@ -14,7 +14,6 @@ export const ContactListPage = () => {
   const [findContacts, setFindContacts] = useState<
     Array<ContactDto> | undefined
   >(contacts)
-  console.log(findContacts)
 
   const onSubmit = (fv: Partial<FilterFormValues>) => {
     let foundContacts: ContactDto[] | undefined = contacts
@@ -30,7 +29,6 @@ export const ContactListPage = () => {
       const foundGroupContacts = groupContacts?.find(
         ({ id }) => id === fv.groupId
       )
-      console.log(foundGroupContacts, 'group')
 
       if (foundGroupContacts) {
         foundContacts = foundContacts?.filter(({ id }) =>
@@ -59,8 +57,6 @@ export const ContactListPage = () => {
         <Col>
           <Row xxl={4} className="g-4">
             {findContacts?.map((contact) => {
-              console.log(contact)
-
               return (
                 <Col key={contact.id}>
                   <ContactCard contact={contact} withLink />

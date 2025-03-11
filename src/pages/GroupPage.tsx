@@ -3,16 +3,11 @@ import { useParams } from 'react-router-dom'
 import { GroupContactsCard } from 'src/components/GroupContactsCard'
 import { Empty } from 'src/components/Empty'
 import { ContactCard } from 'src/components/ContactCard'
-import { useAppSelector } from 'src/redux/reducers/hooks'
-import { useGetGroupContactQuery } from 'src/redux/reducers/groupContactReducer'
+import { useGetGroupContactQuery } from 'src/redux/groupContacts'
+import { useGetContactQuery } from 'src/redux/contacts'
 
 export const GroupPage = () => {
-  const contactsState = useAppSelector(
-    (state) => state.contacts.entitiesContacts
-  )
-  // const groupContacts = useAppSelector(
-  //   (state) => state.groupContacts.entitiesGroupContacts
-  // )
+  const { currentData: contactsState } = useGetContactQuery()
   const { data: groupContacts } = useGetGroupContactQuery()
 
   const { groupId } = useParams<{ groupId: string }>()
@@ -21,7 +16,7 @@ export const GroupPage = () => {
     (groupContact) => groupContact.id === groupId
   )
 
-  const contacts = contactsState.filter(({ id }) =>
+  const contacts = contactsState?.filter(({ id }) =>
     JSON.stringify(findGroup?.contactIds).includes(id)
   )
 
@@ -38,7 +33,7 @@ export const GroupPage = () => {
           </Col>
           <Col>
             <Row xxl={4} className="g-4">
-              {contacts.map((contact) => (
+              {contacts?.map((contact) => (
                 <Col key={contact.id}>
                   <ContactCard contact={contact} withLink />
                 </Col>

@@ -1,7 +1,7 @@
 import { memo } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { GroupContactsCard } from 'src/components/GroupContactsCard'
-import { useGetGroupContactQuery } from 'src/redux/reducers/groupContactReducer'
+import { useGetGroupContactQuery } from 'src/redux/groupContacts'
 
 export const GroupListPage = memo(() => {
   // const groupContacts = useAppSelector(
