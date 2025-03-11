@@ -14,6 +14,7 @@ export const ContactListPage = () => {
   const [findContacts, setFindContacts] = useState<
     Array<ContactDto> | undefined
   >(contacts)
+  console.log(findContacts)
 
   const onSubmit = (fv: Partial<FilterFormValues>) => {
     let foundContacts: ContactDto[] | undefined = contacts
@@ -57,11 +58,15 @@ export const ContactListPage = () => {
         </Col>
         <Col>
           <Row xxl={4} className="g-4">
-            {findContacts?.map((contact) => (
-              <Col key={contact.id}>
-                <ContactCard contact={contact} withLink />
-              </Col>
-            ))}
+            {findContacts?.map((contact) => {
+              console.log(contact)
+
+              return (
+                <Col key={contact.id}>
+                  <ContactCard contact={contact} withLink />
+                </Col>
+              )
+            })}
           </Row>
         </Col>
       </Row>

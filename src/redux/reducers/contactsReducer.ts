@@ -1,7 +1,6 @@
 import { DATA_CONTACT } from 'src/__data__'
 import { ContactDto } from 'src/types/dto/ContactDto'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { GroupContactsDto } from 'src/types/dto/GroupContactsDto'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 interface IContactState {
@@ -42,7 +41,7 @@ export const contactApiSlice = createApi({
     return {
       getContact: builder.query<Array<ContactDto>, void>({
         query: () => ({
-          url: '/9b7bc600-9f3b-4c49-b50c-532e79220220',
+          url: '/4d7fd30a-ae7c-4ad4-89c4-fad7661ade8b',
         }),
       }),
     }
